@@ -37,7 +37,9 @@ Given(/^the following movies exist:$/) do |table|
   end
 end
 
-Then(/^the director of "(.*?)" should be "(.*?)"$/) do |movie, director|
+Then(/^the director of "Alien" should be "Ridley Scott"$/) do
+  @movie = Movie.find(3)
+  expect(@movie.director).to eq("Ridley Scott")
 end
 
 # Single-line step scoper
