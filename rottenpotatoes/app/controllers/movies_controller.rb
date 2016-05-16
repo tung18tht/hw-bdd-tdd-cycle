@@ -4,10 +4,21 @@ class MoviesController < ApplicationController
     params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 
+  def similar
+    @movie = Movie.find params[:id]
+    @director = @movie.director
+    @movies = Movie.where(director: @director)
+  end
+
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
+    if @movie.director == nil
+      @similar_link = movies_path
+    else
+      @similar_link = similar_movie_path(@movie)
+    end
   end
 
   def index
